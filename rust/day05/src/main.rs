@@ -22,13 +22,7 @@ fn main() {
     let mut stdin = stdin.lock().lines();
     let input: Vec<char> = stdin.next().unwrap().unwrap().chars().collect();
     println!("Part 1: {}", react(input.iter()));
-
     let alphabet = input.iter().map(|c| c.to_ascii_lowercase()).collect::<HashSet<char>>();
-    let mut part2 = std::usize::MAX;
-    for &letter in &alphabet {
-        let reduced_input = input.iter().filter(|c| c.to_ascii_lowercase() != letter);
-        let len = react(reduced_input);
-        part2 = if len < part2 { len } else { part2 };
-    }
+    let part2 = alphabet.iter().map(|&letter| react(input.iter().filter(|c| c.to_ascii_lowercase() != letter))).min().unwrap();
     println!("Part 2: {}", part2);
 }
